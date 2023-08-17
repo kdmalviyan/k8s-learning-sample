@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  name: k8s-learning-sample-ingress
+  namespace: default
+spec:
+  rules:
+    - host: localhost
+      http:
+        paths:
+          - path: /user-app
+            pathType: Prefix
+            backend:
+              service:
+                name: user-service-app
+                port:
+                  number: 8080
+          - path: /expense-app
+            pathType: Prefix
+            backend:
+              service:
+                name: expense-app-service
+                port:
+                  number: 8080

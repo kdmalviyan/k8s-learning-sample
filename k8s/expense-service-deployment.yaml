@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: expense-service-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: expense-app-service
+  template:
+    metadata:
+      labels:
+        app: expense-app-service
+    spec:
+      containers:
+        - name: expense-service-app-deployment
+          image: kdmalviyan/expense-service:latest
+          ports:
+            - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: expense-app-service
+spec:
+  selector:
+    app: expense-app-service
+  ports:
+    - protocol: TCP
+      port: 9090
+      targetPort: 8080
+  type: NodePort
